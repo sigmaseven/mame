@@ -27,6 +27,18 @@
 #include <cstddef>
 #endif
 
+
+//============================================================
+//  Standard defines
+//============================================================
+
+// prevent implicit copying
+#define P_PREVENT_COPYING(_name)          		\
+	private:                                    \
+		_name(const _name &);                   \
+		_name &operator=(const _name &);
+
+
 //============================================================
 //  Compiling standalone
 //============================================================
@@ -122,13 +134,18 @@ typedef int64_t      INT64;
 #endif
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
-#ifdef PTR64
+#if (PTR64)
 #define SIZETFMT   "I64u"
 #else
 #define SIZETFMT   "u"
 #endif
 #else
-#define SIZETFMT   "zu"
+//#define SIZETFMT   "zu"
+#if (PTR64)
+#define SIZETFMT   "lu"
+#else
+#define SIZETFMT   "u"
+#endif
 #endif
 
 #endif
