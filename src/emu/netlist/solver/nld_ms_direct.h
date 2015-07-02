@@ -146,8 +146,11 @@ ATTR_COLD void matrix_solver_direct_t<m_N, _storage_N>::add_term(int k, terminal
 template <unsigned m_N, unsigned _storage_N>
 ATTR_COLD void matrix_solver_direct_t<m_N, _storage_N>::vsetup(analog_net_t::list_t &nets)
 {
-	if (m_dim < nets.size())
-		netlist().error("Dimension %d less than %" SIZETFMT, m_dim, nets.size());
+	if (m_dim < nets.size()) {
+		// hope this is never > 2^32
+		netlist().error("Dimension %d less than %d", m_dim, (int) nets.size());
+//		netlist().error("Dimension %d less than %" SIZETFMT, m_dim, nets.size());
+	}
 
 	for (unsigned k = 0; k < N(); k++)
 	{

@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nllists.h
+ * nl_lists.h
  *
  */
 
@@ -155,4 +155,4 @@ namespace netlist
 
 }
 
-#endif /* NLLISTS_H_ */
+#endif /* NL_LISTS_H_ */

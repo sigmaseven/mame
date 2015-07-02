@@ -105,4 +105,5 @@ inline double vec_maxabs(const std::size_t n, const double * RESTRICT v)
 #pragma GCC diagnostic pop
 #endif
 
-#endif /* MAT_CR_H_ */
+#endif /* VECTOR_BASE_H_ */
+

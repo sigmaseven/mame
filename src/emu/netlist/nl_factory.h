@@ -95,4 +95,4 @@ namespace netlist
 
 }
 
-#endif /* NLFACTORY_H_ */
+#endif /* NL_FACTORY_H_ */

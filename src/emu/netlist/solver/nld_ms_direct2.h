@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nld_ms_direct1.h
+ * nld_ms_direct2.h
  *
  */
 

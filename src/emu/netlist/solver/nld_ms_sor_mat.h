@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nld_ms_sor.h
+ * nld_ms_sor_mat.h
  *
  * Generic successive over relaxation solver.
  *

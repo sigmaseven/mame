@@ -102,4 +102,4 @@ inline void pfree_array_t(T *p)
 
 #endif
 
-#endif /* NLCONFIG_H_ */
+#endif /* PALLOC_H_ */

@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nlbase.h
+ * nl_base.h
  *
  *  A mixed signal circuit simulation
  *
@@ -1409,4 +1409,4 @@ namespace netlist
 NETLIST_SAVE_TYPE(netlist::core_terminal_t::state_e, DT_INT);
 
 
-#endif /* NLBASE_H_ */
+#endif /* NL_BASE_H_ */

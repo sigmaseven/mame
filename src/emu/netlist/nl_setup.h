@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nlsetup.h
+ * nl_setup.h
  *
  */
 
@@ -306,4 +306,4 @@ namespace netlist
 }
 
 
-#endif /* NLSETUP_H_ */
+#endif /* NL_SETUP_H_ */

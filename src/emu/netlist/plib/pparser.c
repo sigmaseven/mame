@@ -462,8 +462,11 @@ pstring ppreprocessor::process(const pstring &contents)
 					m_defines.add(define_t(lti[1], lti[2]));
 				}
 			}
-			else
-				error(pstring::sprintf("unknown directive on line %" SIZETFMT ": %s\n", i, line.cstr()));
+			else {
+				// let's assume i won't get above 2^32, change if so
+				error(pstring::sprintf("unknown directive on line %d: %s\n", (int)i, line.cstr()));
+//				error(pstring::sprintf("unknown directive on line %" SIZETFMT ": %s\n", i, line.cstr()));
+			}
 		}
 		else
 		{

@@ -353,8 +353,11 @@ void parser_t::device(const pstring &dev_type)
 		cnt++;
 		tok = get_token();
 	}
-	if (cnt != termlist.size())
-		m_setup.netlist().error("netlist: input count mismatch for %s - expected %" SIZETFMT " found %" SIZETFMT "\n", devname.cstr(), termlist.size(), cnt);
+	if (cnt != termlist.size()) {
+		// quick fix if 64 bit not really needed
+		m_setup.netlist().error("netlist: input count mismatch for %s - expected %d found %d\n", devname.cstr(), (int) termlist.size(), (int) cnt);
+//		m_setup.netlist().error("netlist: input count mismatch for %s - expected %" SIZETFMT " found %" SIZETFMT "\n", devname.cstr(), termlist.size(), cnt);
+	}
 	require_token(tok, m_tok_param_right);
 }
 

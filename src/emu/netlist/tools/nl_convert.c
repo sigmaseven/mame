@@ -180,7 +180,7 @@ nl_convert_base_t::unit_t nl_convert_base_t::m_units[] = {
 		{"M",   "CAP_M(%g)", 1.0e-3 },
 		{"u",   "CAP_U(%g)", 1.0e-6 }, /* eagle */
 		{"U",   "CAP_U(%g)", 1.0e-6 },
-		{"Î¼",   "CAP_U(%g)", 1.0e-6    },
+		{"µ",   "CAP_U(%g)", 1.0e-6    },
 		{"N",   "CAP_N(%g)", 1.0e-9 },
 		{"P",   "CAP_P(%g)", 1.0e-12},
 		{"F",   "%ge-15",    1.0e-15},
@@ -337,7 +337,9 @@ void nl_convert_spice_t::process_line(const pstring &line)
 				add_device(tname, xname);
 				for (std::size_t i=1; i < tt.size() - 1; i++)
 				{
-					pstring term = pstring::sprintf("%s.%" SIZETFMT, xname.cstr(), i);
+					// let's hope i won't go above 2^32
+					pstring term = pstring::sprintf("%s.%d", xname.cstr(), (int)i);
+//					pstring term = pstring::sprintf("%s.%" SIZETFMT, xname.cstr(), i);
 					add_term(tt[i], term);
 				}
 				break;

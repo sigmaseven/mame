@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nl_parser.c
+ * nl_parser.h
  *
  */
 

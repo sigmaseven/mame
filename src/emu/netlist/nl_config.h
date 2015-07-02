@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nlconfig.h
+ * nl_config.h
  *
  */
 
@@ -167,4 +167,4 @@
 #endif
 
 
-#endif /* NLCONFIG_H_ */
+#endif /* NL_CONFIG_H_ */

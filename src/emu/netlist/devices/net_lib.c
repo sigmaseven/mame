@@ -2,7 +2,7 @@
 // copyright-holders:Couriersud
 /***************************************************************************
 
-    netlib.c
+    net_lib.c
 
     Discrete netlist implementation.
 

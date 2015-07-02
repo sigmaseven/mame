@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nld_legacy.c
+ * nld_switches.c
  *
  */
 

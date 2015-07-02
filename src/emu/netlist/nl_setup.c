@@ -1,7 +1,7 @@
 // license:GPL-2.0+
 // copyright-holders:Couriersud
 /*
- * nlsetup.c
+ * nl_setup.c
  *
  */
 
