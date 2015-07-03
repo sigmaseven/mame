@@ -619,7 +619,7 @@ TextBufferManager::TextBufferManager(FontManager* _fontManager)
 		.add(bgfx::Attrib::Color0,    4, bgfx::AttribType::Uint8, true)
 		.end();
 
-	u_texColor = bgfx::createUniform("u_texColor", bgfx::UniformType::Uniform1iv);
+	u_texColor = bgfx::createUniform("u_texColor", bgfx::UniformType::Int1);
 }
 
 TextBufferManager::~TextBufferManager()
@@ -793,10 +793,12 @@ void TextBufferManager::submitTextBuffer(TextBufferHandle _handle, uint8_t _id, 
 				vbh.idx = bc.vertexBufferHandleIdx;
 
 				bgfx::updateDynamicIndexBuffer(ibh
+						, 0
 						, bgfx::copy(bc.textBuffer->getIndexBuffer(), indexSize)
 						);
 
 				bgfx::updateDynamicVertexBuffer(vbh
+						, 0
 						, bgfx::copy(bc.textBuffer->getVertexBuffer(), vertexSize)
 						);
 			}

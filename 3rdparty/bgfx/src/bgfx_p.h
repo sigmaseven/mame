@@ -109,10 +109,10 @@ namespace bgfx
 #include "bgfxplatform.h"
 #include "image.h"
 
-#define BGFX_CHUNK_MAGIC_CSH BX_MAKEFOURCC('C', 'S', 'H', 0x1)
-#define BGFX_CHUNK_MAGIC_FSH BX_MAKEFOURCC('F', 'S', 'H', 0x3)
+#define BGFX_CHUNK_MAGIC_CSH BX_MAKEFOURCC('C', 'S', 'H', 0x2)
+#define BGFX_CHUNK_MAGIC_FSH BX_MAKEFOURCC('F', 'S', 'H', 0x4)
 #define BGFX_CHUNK_MAGIC_TEX BX_MAKEFOURCC('T', 'E', 'X', 0x0)
-#define BGFX_CHUNK_MAGIC_VSH BX_MAKEFOURCC('V', 'S', 'H', 0x3)
+#define BGFX_CHUNK_MAGIC_VSH BX_MAKEFOURCC('V', 'S', 'H', 0x4)
 
 #define BGFX_CLEAR_COLOR_USE_PALETTE UINT16_C(0x8000)
 #define BGFX_CLEAR_MASK (0 \
@@ -174,6 +174,7 @@ namespace stl
 #define BGFX_RENDERER_DIRECT3D9_NAME  "Direct3D 9"
 #define BGFX_RENDERER_DIRECT3D11_NAME "Direct3D 11"
 #define BGFX_RENDERER_DIRECT3D12_NAME "Direct3D 12"
+#define BGFX_RENDERER_METAL_NAME "Metal"
 #define BGFX_RENDERER_VULKAN_NAME "Vulkan"
 #define BGFX_RENDERER_NULL_NAME "NULL"
 
@@ -1203,7 +1204,7 @@ namespace bgfx
 	BX_ALIGN_DECL_CACHE_LINE(struct) Frame
 	{
 		Frame()
-			: m_hmdEnabled(false)
+			: m_hmdInitialized(false)
 			, m_waitSubmit(0)
 			, m_waitRender(0)
 		{
@@ -1645,7 +1646,7 @@ namespace bgfx
 		UniformHandle m_freeUniformHandle[BGFX_CONFIG_MAX_UNIFORMS];
 		TextVideoMem* m_textVideoMem;
 		HMD m_hmd;
-		bool m_hmdEnabled;
+		bool m_hmdInitialized;
 
 		int64_t m_waitSubmit;
 		int64_t m_waitRender;
@@ -1987,7 +1988,7 @@ namespace bgfx
 
 		BGFX_API_FUNC(const HMD* getHMD() )
 		{
-			if (m_submit->m_hmdEnabled)
+			if (m_submit->m_hmdInitialized)
 			{
 				return &m_submit->m_hmd;
 			}
@@ -2158,12 +2159,12 @@ namespace bgfx
 			DynamicIndexBufferHandle handle = createDynamicIndexBuffer(_mem->size/indexSize, _flags);
 			if (isValid(handle) )
 			{
-				updateDynamicIndexBuffer(handle, _mem);
+				updateDynamicIndexBuffer(handle, 0, _mem);
 			}
 			return handle;
 		}
 
-		BGFX_API_FUNC(void updateDynamicIndexBuffer(DynamicIndexBufferHandle _handle, const Memory* _mem) )
+		BGFX_API_FUNC(void updateDynamicIndexBuffer(DynamicIndexBufferHandle _handle, uint32_t _startIndex, const Memory* _mem) )
 		{
 			BGFX_CHECK_HANDLE("updateDynamicIndexBuffer", m_dynamicIndexBufferHandle, _handle);
 
@@ -2184,8 +2185,8 @@ namespace bgfx
 				dib.m_startIndex = bx::strideAlign(dib.m_offset, indexSize)/indexSize;
 			}
 
-			uint32_t offset = dib.m_startIndex*indexSize;
-			uint32_t size   = bx::uint32_min(dib.m_size, _mem->size);
+			uint32_t offset = (dib.m_startIndex + _startIndex)*indexSize;
+			uint32_t size   = bx::uint32_min(bx::uint32_satsub(dib.m_size, _startIndex*indexSize), _mem->size);
 			BX_CHECK(_mem->size <= size, "Truncating dynamic index buffer update (size %d, mem size %d)."
 				, size
 				, _mem->size
@@ -2307,12 +2308,12 @@ namespace bgfx
 			DynamicVertexBufferHandle handle = createDynamicVertexBuffer(uint16_t(numVertices), _decl, _flags);
 			if (isValid(handle) )
 			{
-				updateDynamicVertexBuffer(handle, _mem);
+				updateDynamicVertexBuffer(handle, 0, _mem);
 			}
 			return handle;
 		}
 
-		BGFX_API_FUNC(void updateDynamicVertexBuffer(DynamicVertexBufferHandle _handle, const Memory* _mem) )
+		BGFX_API_FUNC(void updateDynamicVertexBuffer(DynamicVertexBufferHandle _handle, uint32_t _startVertex, const Memory* _mem) )
 		{
 			BGFX_CHECK_HANDLE("updateDynamicVertexBuffer", m_dynamicVertexBufferHandle, _handle);
 
@@ -2332,8 +2333,8 @@ namespace bgfx
 				dvb.m_startVertex = bx::strideAlign(dvb.m_offset, dvb.m_stride)/dvb.m_stride;
 			}
 
-			uint32_t offset = dvb.m_startVertex*dvb.m_stride;
-			uint32_t size   = bx::uint32_min(dvb.m_size, _mem->size);
+			uint32_t offset = (dvb.m_startVertex + _startVertex)*dvb.m_stride;
+			uint32_t size   = bx::uint32_min(bx::uint32_satsub(dvb.m_size, _startVertex*dvb.m_stride), _mem->size);
 			BX_CHECK(_mem->size <= size, "Truncating dynamic vertex buffer update (size %d, mem size %d)."
 				, dvb.m_size
 				, _mem->size
