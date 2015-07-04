@@ -45,21 +45,21 @@ namespace bx
 				return (_mask) == (_mm_movemask_ps(_test)&(_mask) ); \
 			}
 
-IMPLEMENT_TEST(x    , 0x1);
-IMPLEMENT_TEST(y    , 0x2);
-IMPLEMENT_TEST(xy   , 0x3);
-IMPLEMENT_TEST(z    , 0x4);
-IMPLEMENT_TEST(xz   , 0x5);
-IMPLEMENT_TEST(yz   , 0x6);
-IMPLEMENT_TEST(xyz  , 0x7);
-IMPLEMENT_TEST(w    , 0x8);
-IMPLEMENT_TEST(xw   , 0x9);
-IMPLEMENT_TEST(yw   , 0xa);
-IMPLEMENT_TEST(xyw  , 0xb);
-IMPLEMENT_TEST(zw   , 0xc);
-IMPLEMENT_TEST(xzw  , 0xd);
-IMPLEMENT_TEST(yzw  , 0xe);
-IMPLEMENT_TEST(xyzw , 0xf);
+IMPLEMENT_TEST(x    , 0x1)
+IMPLEMENT_TEST(y    , 0x2)
+IMPLEMENT_TEST(xy   , 0x3)
+IMPLEMENT_TEST(z    , 0x4)
+IMPLEMENT_TEST(xz   , 0x5)
+IMPLEMENT_TEST(yz   , 0x6)
+IMPLEMENT_TEST(xyz  , 0x7)
+IMPLEMENT_TEST(w    , 0x8)
+IMPLEMENT_TEST(xw   , 0x9)
+IMPLEMENT_TEST(yw   , 0xa)
+IMPLEMENT_TEST(xyw  , 0xb)
+IMPLEMENT_TEST(zw   , 0xc)
+IMPLEMENT_TEST(xzw  , 0xd)
+IMPLEMENT_TEST(yzw  , 0xe)
+IMPLEMENT_TEST(xyzw , 0xf)
 
 #undef IMPLEMENT_TEST
 
@@ -161,7 +161,7 @@ IMPLEMENT_TEST(xyzw , 0xf);
 	{
 		const __m128i set     = _mm_set_epi32(_w, _z, _y, _x);
 		const float4_t result = _mm_castsi128_ps(set);
-		
+
 		return result;
 	}
 

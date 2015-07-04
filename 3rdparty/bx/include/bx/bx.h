@@ -47,6 +47,6 @@ namespace bx
 } // namespace bx
 
 // Annoying C++0x stuff..
-namespace std { namespace tr1 {}; using namespace tr1; }
+namespace std { namespace tr1 {} using namespace tr1; }
 
 #endif // BX_H_HEADER_GUARD

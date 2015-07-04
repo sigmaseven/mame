@@ -30,7 +30,7 @@ namespace bx
 		{
 			Begin,
 			Current,
-			End,
+			End
 		};
 	};
 

@@ -571,7 +571,7 @@ namespace bgfx
 			DestroyTexture,
 			DestroyFrameBuffer,
 			DestroyUniform,
-			SaveScreenShot,
+			SaveScreenShot
 		};
 
 		void write(const void* _data, uint32_t _size)

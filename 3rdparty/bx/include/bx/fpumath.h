@@ -596,7 +596,7 @@ namespace bx
 		_result[ 9] = cy*sx;
 		_result[10] = cx*cy;
 		_result[15] = 1.0f;
-	};
+	}
 
 	inline void mtxSRT(float* _result, float _sx, float _sy, float _sz, float _ax, float _ay, float _az, float _tx, float _ty, float _tz)
 	{

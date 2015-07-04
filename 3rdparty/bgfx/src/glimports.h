@@ -378,45 +378,45 @@ GL_IMPORT______(false, PFNGLVIEWPORTPROC,                          glViewport);
 GL_IMPORT______(false, PFNGLCLEARDEPTHPROC,                        glClearDepth);
 GL_IMPORT______(false, PFNGLPOINTSIZEPROC,                         glPointSize);
 
-GL_IMPORT_ARB__(true,  PFNGLDEBUGMESSAGECONTROLPROC,               glDebugMessageControl);
-GL_IMPORT_ARB__(true,  PFNGLDEBUGMESSAGEINSERTPROC,                glDebugMessageInsert);
-GL_IMPORT_ARB__(true,  PFNGLDEBUGMESSAGECALLBACKPROC,              glDebugMessageCallback);
-GL_IMPORT_ARB__(true,  PFNGLGETDEBUGMESSAGELOGPROC,                glGetDebugMessageLog);
-GL_IMPORT_ARB__(true,  PFNGLPUSHDEBUGGROUPPROC,                    glPushDebugGroup);
-GL_IMPORT_ARB__(true,  PFNGLPOPDEBUGGROUPPROC,                     glPopDebugGroup);
-GL_IMPORT_ARB__(true,  PFNGLOBJECTLABELPROC,                       glObjectLabel);
-GL_IMPORT_ARB__(true,  PFNGLGETOBJECTLABELPROC,                    glGetObjectLabel);
-GL_IMPORT_ARB__(true,  PFNGLOBJECTPTRLABELPROC,                    glObjectPtrLabel);
-GL_IMPORT_ARB__(true,  PFNGLGETOBJECTPTRLABELPROC,                 glGetObjectPtrLabel);
-GL_IMPORT_ARB__(true,  PFNGLGETPOINTERVPROC,                       glGetPointerv);
+GL_IMPORT_ARB__(true,  PFNGLDEBUGMESSAGECONTROLPROC,               glDebugMessageControl)
+GL_IMPORT_ARB__(true,  PFNGLDEBUGMESSAGEINSERTPROC,                glDebugMessageInsert)
+GL_IMPORT_ARB__(true,  PFNGLDEBUGMESSAGECALLBACKPROC,              glDebugMessageCallback)
+GL_IMPORT_ARB__(true,  PFNGLGETDEBUGMESSAGELOGPROC,                glGetDebugMessageLog)
+GL_IMPORT_ARB__(true,  PFNGLPUSHDEBUGGROUPPROC,                    glPushDebugGroup)
+GL_IMPORT_ARB__(true,  PFNGLPOPDEBUGGROUPPROC,                     glPopDebugGroup)
+GL_IMPORT_ARB__(true,  PFNGLOBJECTLABELPROC,                       glObjectLabel)
+GL_IMPORT_ARB__(true,  PFNGLGETOBJECTLABELPROC,                    glGetObjectLabel)
+GL_IMPORT_ARB__(true,  PFNGLOBJECTPTRLABELPROC,                    glObjectPtrLabel)
+GL_IMPORT_ARB__(true,  PFNGLGETOBJECTPTRLABELPROC,                 glGetObjectPtrLabel)
+GL_IMPORT_ARB__(true,  PFNGLGETPOINTERVPROC,                       glGetPointerv)
 
-GL_IMPORT_ARB__(true,  PFNGLBLENDEQUATIONIPROC,                    glBlendEquationi);
-GL_IMPORT_ARB__(true,  PFNGLBLENDEQUATIONSEPARATEIPROC,            glBlendEquationSeparatei);
-GL_IMPORT_ARB__(true,  PFNGLBLENDFUNCIPROC,                        glBlendFunci);
-GL_IMPORT_ARB__(true,  PFNGLBLENDFUNCSEPARATEIPROC,                glBlendFuncSeparatei);
+GL_IMPORT_ARB__(true,  PFNGLBLENDEQUATIONIPROC,                    glBlendEquationi)
+GL_IMPORT_ARB__(true,  PFNGLBLENDEQUATIONSEPARATEIPROC,            glBlendEquationSeparatei)
+GL_IMPORT_ARB__(true,  PFNGLBLENDFUNCIPROC,                        glBlendFunci)
+GL_IMPORT_ARB__(true,  PFNGLBLENDFUNCSEPARATEIPROC,                glBlendFuncSeparatei)
 
-GL_IMPORT_ARB__(true,  PFNGLVERTEXATTRIBDIVISORPROC,               glVertexAttribDivisor);
-GL_IMPORT_ARB__(true,  PFNGLDRAWARRAYSINSTANCEDPROC,               glDrawArraysInstanced);
-GL_IMPORT_ARB__(true,  PFNGLDRAWELEMENTSINSTANCEDPROC,             glDrawElementsInstanced);
+GL_IMPORT_ARB__(true,  PFNGLVERTEXATTRIBDIVISORPROC,               glVertexAttribDivisor)
+GL_IMPORT_ARB__(true,  PFNGLDRAWARRAYSINSTANCEDPROC,               glDrawArraysInstanced)
+GL_IMPORT_ARB__(true,  PFNGLDRAWELEMENTSINSTANCEDPROC,             glDrawElementsInstanced)
 
-GL_IMPORT_ARB__(true,  PFNGLDRAWBUFFERSPROC,                       glDrawBuffers);
+GL_IMPORT_ARB__(true,  PFNGLDRAWBUFFERSPROC,                       glDrawBuffers)
 
-GL_IMPORT_ARB__(true,  PFNGLINVALIDATEFRAMEBUFFERPROC,             glInvalidateFramebuffer);
+GL_IMPORT_ARB__(true,  PFNGLINVALIDATEFRAMEBUFFERPROC,             glInvalidateFramebuffer)
 
-GL_IMPORT_ARB__(true,  PFNGLMULTIDRAWARRAYSINDIRECTPROC,           glMultiDrawArraysIndirect);
-GL_IMPORT_ARB__(true,  PFNGLMULTIDRAWELEMENTSINDIRECTPROC,         glMultiDrawElementsIndirect);
+GL_IMPORT_ARB__(true,  PFNGLMULTIDRAWARRAYSINDIRECTPROC,           glMultiDrawArraysIndirect)
+GL_IMPORT_ARB__(true,  PFNGLMULTIDRAWELEMENTSINDIRECTPROC,         glMultiDrawElementsIndirect)
 
-GL_IMPORT_EXT__(true,  PFNGLBINDFRAMEBUFFERPROC,                   glBindFramebuffer);
-GL_IMPORT_EXT__(true,  PFNGLGENFRAMEBUFFERSPROC,                   glGenFramebuffers);
-GL_IMPORT_EXT__(true,  PFNGLDELETEFRAMEBUFFERSPROC,                glDeleteFramebuffers);
-GL_IMPORT_EXT__(true,  PFNGLCHECKFRAMEBUFFERSTATUSPROC,            glCheckFramebufferStatus);
-GL_IMPORT_EXT__(true,  PFNGLFRAMEBUFFERRENDERBUFFERPROC,           glFramebufferRenderbuffer);
-GL_IMPORT_EXT__(true,  PFNGLFRAMEBUFFERTEXTURE2DPROC,              glFramebufferTexture2D);
-GL_IMPORT_EXT__(true,  PFNGLBINDRENDERBUFFERPROC,                  glBindRenderbuffer);
-GL_IMPORT_EXT__(true,  PFNGLGENRENDERBUFFERSPROC,                  glGenRenderbuffers);
-GL_IMPORT_EXT__(true,  PFNGLDELETERENDERBUFFERSPROC,               glDeleteRenderbuffers);
-GL_IMPORT_EXT__(true,  PFNGLRENDERBUFFERSTORAGEPROC,               glRenderbufferStorage);
-GL_IMPORT_EXT__(true,  PFNGLRENDERBUFFERSTORAGEMULTISAMPLEPROC,    glRenderbufferStorageMultisample);
+GL_IMPORT_EXT__(true,  PFNGLBINDFRAMEBUFFERPROC,                   glBindFramebuffer)
+GL_IMPORT_EXT__(true,  PFNGLGENFRAMEBUFFERSPROC,                   glGenFramebuffers)
+GL_IMPORT_EXT__(true,  PFNGLDELETEFRAMEBUFFERSPROC,                glDeleteFramebuffers)
+GL_IMPORT_EXT__(true,  PFNGLCHECKFRAMEBUFFERSTATUSPROC,            glCheckFramebufferStatus)
+GL_IMPORT_EXT__(true,  PFNGLFRAMEBUFFERRENDERBUFFERPROC,           glFramebufferRenderbuffer)
+GL_IMPORT_EXT__(true,  PFNGLFRAMEBUFFERTEXTURE2DPROC,              glFramebufferTexture2D)
+GL_IMPORT_EXT__(true,  PFNGLBINDRENDERBUFFERPROC,                  glBindRenderbuffer)
+GL_IMPORT_EXT__(true,  PFNGLGENRENDERBUFFERSPROC,                  glGenRenderbuffers)
+GL_IMPORT_EXT__(true,  PFNGLDELETERENDERBUFFERSPROC,               glDeleteRenderbuffers)
+GL_IMPORT_EXT__(true,  PFNGLRENDERBUFFERSTORAGEPROC,               glRenderbufferStorage)
+GL_IMPORT_EXT__(true,  PFNGLRENDERBUFFERSTORAGEMULTISAMPLEPROC,    glRenderbufferStorageMultisample)
 
 #	else // GLES
 GL_IMPORT______(false, PFNGLCLEARDEPTHFPROC,                       glClearDepthf);

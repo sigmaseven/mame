@@ -162,17 +162,17 @@ typedef enum bgfx_backbuffer_ratio
 #define BGFX_HANDLE_T(_name) \
     typedef struct _name { uint16_t idx; } _name##_t;
 
-BGFX_HANDLE_T(bgfx_indirect_buffer_handle);
-BGFX_HANDLE_T(bgfx_dynamic_index_buffer_handle);
-BGFX_HANDLE_T(bgfx_dynamic_vertex_buffer_handle);
-BGFX_HANDLE_T(bgfx_frame_buffer_handle);
-BGFX_HANDLE_T(bgfx_index_buffer_handle);
-BGFX_HANDLE_T(bgfx_program_handle);
-BGFX_HANDLE_T(bgfx_shader_handle);
-BGFX_HANDLE_T(bgfx_texture_handle);
-BGFX_HANDLE_T(bgfx_uniform_handle);
-BGFX_HANDLE_T(bgfx_vertex_buffer_handle);
-BGFX_HANDLE_T(bgfx_vertex_decl_handle);
+BGFX_HANDLE_T(bgfx_indirect_buffer_handle)
+BGFX_HANDLE_T(bgfx_dynamic_index_buffer_handle)
+BGFX_HANDLE_T(bgfx_dynamic_vertex_buffer_handle)
+BGFX_HANDLE_T(bgfx_frame_buffer_handle)
+BGFX_HANDLE_T(bgfx_index_buffer_handle)
+BGFX_HANDLE_T(bgfx_program_handle)
+BGFX_HANDLE_T(bgfx_shader_handle)
+BGFX_HANDLE_T(bgfx_texture_handle)
+BGFX_HANDLE_T(bgfx_uniform_handle)
+BGFX_HANDLE_T(bgfx_vertex_buffer_handle)
+BGFX_HANDLE_T(bgfx_vertex_decl_handle)
 
 #undef BGFX_HANDLE_T
 
