@@ -699,10 +699,11 @@ if (_OPTIONS["targetos"]=="solaris") then
 	}
 else
 	buildoptions_c {
---		"-pedantic",
+		"-Wpedantic",
 --		"-std=gnu89",
-		"-Wno-variadic-macros",
 		"-std=c99",
+		"-Wno-variadic-macros",
+		"-flto-odr-type-merging",
 
 	}
 end	
@@ -711,15 +712,16 @@ end
 if _OPTIONS["CPP11"]=="1" then
 	buildoptions_cpp {
 		"-x c++",
-		"-std=gnu++11",
+--		"-std=gnu++11",
+		"-std=c++11",
 	}
 else
 	--we compile C++ code to C++98 standard with GNU extensions
 	buildoptions_cpp {
-		"-x c++",
---		"-pedantic",
 		"-Wno-long-long",
 		"-Wno-variadic-macros",
+		"-x c++",
+		"-Wpedantic",
 --		"-std=gnu++98",
 		"-std=c++98",
 	}
@@ -978,8 +980,15 @@ end
 			end
 			if (version >= 50000) then
 				buildoptions {
---					"-D__USE_MINGW_ANSI_STDIO=1",							
-					"-fdiagnostics-show-option"
+					"-Wl,no-error=odr",
+					"-Wl,no-odr",
+					"-D__USE_MINGW_ANSI_STDIO=1",
+					"-D_GLIBCXX_USE_CXX11_ABI=0",
+					"-fdiagnostics-show-option",
+					"-flto-odr-type-merging",
+					"-fipa-icf",
+					"-fipa-reference",
+					"-fipa-pta"
 				}
 			end
 			
