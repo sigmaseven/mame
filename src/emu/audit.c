@@ -348,8 +348,9 @@ media_auditor::summary media_auditor::summarize(const char *name, std::string *o
 		if (output != NULL)
 		{
 			strcatprintf(*output,"%-12s: %s", name, record->name());
-//			if (record->expected_length() > 0)
+			if (record->expected_length() > 0)
 //				strcatprintf(*output," (%" I64FMT "d bytes)", record->expected_length());
+				strcatprintf(*output," (%s bytes)", I64_to_base10(record->expected_length()));
 			strcatprintf(*output," - ");
 		}
 
