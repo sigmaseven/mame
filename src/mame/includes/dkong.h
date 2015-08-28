@@ -285,11 +285,14 @@ public:
 	************************************************/
 	// Read hook members
 	DECLARE_READ8_MEMBER(score_read);
+	DECLARE_READ8_MEMBER(level_state_read);
 	
 	// Writehook members
 	DECLARE_WRITE8_MEMBER(score_write);
+	DECLARE_WRITE8_MEMBER(level_state_write);
 	
 	// Additional members (counters etc.)
+
 	// End project related members and declaration macros.
 
 private:

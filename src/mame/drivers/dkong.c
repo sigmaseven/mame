@@ -776,6 +776,7 @@ WRITE8_MEMBER(dkong_state::nmi_mask_w)
 /***************************************
  * Project specific read/write handlers
  ***************************************/
+// READ HANDLERS
 READ8_MEMBER(dkong_state::score_read)
 {
 	// Basic plumbing to allow this region of memory to be read
@@ -783,12 +784,48 @@ READ8_MEMBER(dkong_state::score_read)
 	return memory[0x60b2 + offset];
 }
 
+READ8_MEMBER(dkong_state::level_state_read)
+{
+	UINT8 *memory = memregion("maincpu")->base();
+	return memory[0x600a];
+}
+
+// WRITE HANDLERS
 WRITE8_MEMBER(dkong_state::score_write)
 {
 	// Basic plumbing to allow this region of memory to be written to
 	UINT8 *memory = memregion("maincpu")->base();
 	memory[0x60b2 + offset] = data;
 }
+
+WRITE8_MEMBER(dkong_state::level_state_write)
+{
+	UINT8 *memory = memregion("maincpu")->base();
+	memory[0x600a] = data;
+	
+	// Let's print some debug information to the console for fun.
+	switch(data)
+	{
+		case 0x01:
+			printf("[LEVEL STATE] Entering attract mode.\n");
+			break;
+		case 0x0b:
+			printf("[LEVEL STATE] Entering new level.\n");
+			break;
+		case 0x0c:
+			printf("[LEVEL STATE] Playing.\n");
+		case 0x0d: 
+			printf("[LEVEL STATE] Dead.\n");
+			break;
+		case 0x10:
+			printf("[LEVEL STATE] Game over.\n");
+			break;
+		default:
+			printf("[LEVEL STATE] Unknown stage?\n");
+	}
+}
+
+// End of project specific handlers
 
 /*************************************
  *
@@ -800,7 +837,9 @@ static ADDRESS_MAP_START( dkong_map, AS_PROGRAM, 8, dkong_state )
 	AM_RANGE(0x0000, 0x3fff) AM_ROM
 	// Original entry
 	//AM_RANGE(0x6000, 0x6bff) AM_RAM
-	AM_RANGE(0x6000, 0x60b1) AM_RAM
+	AM_RANGE(0x6000, 0x6009) AM_RAM
+	AM_RANGE(0x600A, 0x600A) AM_READ(level_state_read) AM_WRITE(level_state_write)
+	AM_RANGE(0x600B, 0x60b1) AM_RAM
 	AM_RANGE(0x60b2, 0x60b4) AM_READ(score_read) AM_WRITE(score_write)
 	AM_RANGE(0x60b5, 0x6bff) AM_RAM
 	AM_RANGE(0x7000, 0x73ff) AM_RAM AM_SHARE("sprite_ram") /* sprite set 1 */
