@@ -773,6 +773,22 @@ WRITE8_MEMBER(dkong_state::nmi_mask_w)
 {
 	m_nmi_mask = data & 1;
 }
+/***************************************
+ * Project specific read/write handlers
+ ***************************************/
+READ8_MEMBER(dkong_state::score_read)
+{
+	// Basic plumbing to allow this region of memory to be read
+	UINT8 *memory = memregion("maincpu")->base();
+	return memory[0x60b2 + offset];
+}
+
+WRITE8_MEMBER(dkong_state::score_write)
+{
+	// Basic plumbing to allow this region of memory to be written to
+	UINT8 *memory = memregion("maincpu")->base();
+	memory[0x60b2 + offset] = data;
+}
 
 /*************************************
  *
@@ -782,7 +798,11 @@ WRITE8_MEMBER(dkong_state::nmi_mask_w)
 
 static ADDRESS_MAP_START( dkong_map, AS_PROGRAM, 8, dkong_state )
 	AM_RANGE(0x0000, 0x3fff) AM_ROM
-	AM_RANGE(0x6000, 0x6bff) AM_RAM
+	// Original entry
+	//AM_RANGE(0x6000, 0x6bff) AM_RAM
+	AM_RANGE(0x6000, 0x60b1) AM_RAM
+	AM_RANGE(0x60b2, 0x60b4) AM_READ(score_read) AM_WRITE(score_write)
+	AM_RANGE(0x60b5, 0x6bff) AM_RAM
 	AM_RANGE(0x7000, 0x73ff) AM_RAM AM_SHARE("sprite_ram") /* sprite set 1 */
 	AM_RANGE(0x7400, 0x77ff) AM_RAM_WRITE(dkong_videoram_w) AM_SHARE("video_ram")
 	AM_RANGE(0x7800, 0x780f) AM_DEVREADWRITE("dma8257", i8257_device, read, write)   /* P8257 control registers */

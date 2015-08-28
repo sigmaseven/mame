@@ -278,6 +278,19 @@ public:
 	DECLARE_READ8_MEMBER(memory_read_byte);
 	DECLARE_WRITE8_MEMBER(memory_write_byte);
 	double CD4049(double x);
+	
+	/***********************************************
+	* Project related member declarations will live 
+	* here in this space.
+	************************************************/
+	// Read hook members
+	DECLARE_READ8_MEMBER(score_read);
+	
+	// Writehook members
+	DECLARE_WRITE8_MEMBER(score_write);
+	
+	// Additional members (counters etc.)
+	// End project related members and declaration macros.
 
 private:
 	// video/dkong.c
