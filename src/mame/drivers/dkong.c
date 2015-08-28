@@ -796,6 +796,12 @@ WRITE8_MEMBER(dkong_state::score_write)
 	// Basic plumbing to allow this region of memory to be written to
 	UINT8 *memory = memregion("maincpu")->base();
 	memory[0x60b2 + offset] = data;
+	
+	// Update score to the console for testing
+	if(offset == 2)
+	{
+		printf("[SCORE] %02x%02x%02x\n", memory[0x60b4], memory[0x60b3], memory[0x60b2]);
+	}
 }
 
 WRITE8_MEMBER(dkong_state::level_state_write)
@@ -814,6 +820,7 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 			break;
 		case 0x0c:
 			printf("[LEVEL STATE] Playing.\n");
+			break;
 		case 0x0d: 
 			printf("[LEVEL STATE] Dead.\n");
 			break;
@@ -821,7 +828,7 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 			printf("[LEVEL STATE] Game over.\n");
 			break;
 		default:
-			printf("[LEVEL STATE] Unknown stage?\n");
+			printf("[LEVEL STATE] Unknown state: %02x\n", data);
 	}
 }
 
