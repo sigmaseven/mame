@@ -500,6 +500,7 @@ MACHINE_START_MEMBER(dkong_state,dkong3)
 MACHINE_RESET_MEMBER(dkong_state,dkong)
 {
 	/* nothing */
+	tracker.setMemoryBase(memregion("maincpu")->base());
 }
 
 MACHINE_RESET_MEMBER(dkong_state,strtheat)
@@ -780,35 +781,31 @@ WRITE8_MEMBER(dkong_state::nmi_mask_w)
 READ8_MEMBER(dkong_state::score_read)
 {
 	// Basic plumbing to allow this region of memory to be read
-	UINT8 *memory = memregion("maincpu")->base();
-	return memory[0x60b2 + offset];
+	return tracker.readMemory(0x60b2 + offset);
 }
 
 READ8_MEMBER(dkong_state::level_state_read)
 {
-	UINT8 *memory = memregion("maincpu")->base();
-	return memory[0x600a];
+	return tracker.readMemory(0x600a);
 }
 
 // WRITE HANDLERS
 WRITE8_MEMBER(dkong_state::score_write)
 {
 	// Basic plumbing to allow this region of memory to be written to
-	UINT8 *memory = memregion("maincpu")->base();
-	memory[0x60b2 + offset] = data;
+	tracker.writeMemory(0x60b2 + offset, data);
 	
 	// Update score to the console for testing
 	if(offset == 2)
 	{
-		printf("[SCORE] %02x%02x%02x\n", memory[0x60b4], memory[0x60b3], memory[0x60b2]);
+		printf("[SCORE] %02x%02x%02x\n", tracker.readMemory(0x60b4), tracker.readMemory(0x60b3), tracker.readMemory(0x60b2));
 	}
 }
 
 WRITE8_MEMBER(dkong_state::level_state_write)
 {
-	UINT8 *memory = memregion("maincpu")->base();
-	memory[0x600a] = data;
-	
+	tracker.writeMemory(0x600a, data);
+	tracker.setStat("level_state", data);
 	// Let's print some debug information to the console for fun.
 	switch(data)
 	{
@@ -823,9 +820,14 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 			break;
 		case 0x0d: 
 			printf("[LEVEL STATE] Dead.\n");
+			deaths++;
+			total_deaths++;
+			printf("[DEATH COUNT] Deaths: %d\n", deaths);
+			printf("[DEATH COUNT] Total deaths: %d\n", total_deaths);
 			break;
 		case 0x10:
 			printf("[LEVEL STATE] Game over.\n");
+			deaths = 0;
 			break;
 		default:
 			printf("[LEVEL STATE] Unknown state: %02x\n", data);

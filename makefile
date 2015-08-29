@@ -1160,6 +1160,7 @@ CPPCHECK_PARAMS += -Isrc/osd/modules/render
 CPPCHECK_PARAMS += -Isrc/osd/windows
 CPPCHECK_PARAMS += -Isrc/emu/cpu/m68000
 CPPCHECK_PARAMS += -I3rdparty
+CPPCHECK_PARAMS += -Isrc/mame/tracker
 ifndef USE_SYSTEM_LIB_LUA
 CPPCHECK_PARAMS += -I3rdparty/lua/src
 endif

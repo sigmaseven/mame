@@ -320,6 +320,8 @@ files {
 	MAME_DIR .. "src/emu/video/vector.c",
 	MAME_DIR .. "src/emu/video/vector.h",
 	MAME_DIR .. "src/emu/video/poly.h",
+	MAME_DIR .. "src/emu/tracker/GameTracker.h",
+	MAME_DIR .. "src/emu/tracker/GameTracker.c",
 }
 
 dependency {

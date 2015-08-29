@@ -13,7 +13,7 @@
 #include "machine/latch8.h"
 #include "machine/z80dma.h"
 #include "machine/i8257.h"
-
+#include "tracker/GameTracker.h"
 
 /*
  * From the schematics:
@@ -292,7 +292,9 @@ public:
 	DECLARE_WRITE8_MEMBER(level_state_write);
 	
 	// Additional members (counters etc.)
-
+	GameTracker tracker;
+	UINT8 deaths;
+	UINT32 total_deaths;
 	// End project related members and declaration macros.
 
 private:
