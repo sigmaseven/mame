@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+#include <fstream>
 #include "../emu/memory.h"
 
 class GameTracker
@@ -18,4 +19,5 @@ class GameTracker
 		UINT8 readMemory(UINT16 address);
 		void writeMemory(UINT16 address, UINT8 value);
 		void buildJSON();
+		void writeFile(std::string name);
 };

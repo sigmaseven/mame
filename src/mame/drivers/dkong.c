@@ -845,6 +845,7 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 		case 0x16:
 			printf("[LEVEL STATE] Level over.\n");
 			tracker.buildJSON();
+			tracker.writeFile("dkong.json");
 			printf("---------------------------\n");
 			printf("  END OF LEVEL STATISTICS  \n");
 			printf("---------------------------\n");
