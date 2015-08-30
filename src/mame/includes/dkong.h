@@ -288,12 +288,14 @@ public:
 	DECLARE_READ8_MEMBER(level_state_read);
 	DECLARE_READ8_MEMBER(bonus_read);
 	DECLARE_READ8_MEMBER(game_start_read);
+	DECLARE_READ8_MEMBER(hammer_read);
 	
 	// Writehook members
 	DECLARE_WRITE8_MEMBER(score_write);
 	DECLARE_WRITE8_MEMBER(level_state_write);
 	DECLARE_WRITE8_MEMBER(bonus_write);
 	DECLARE_WRITE8_MEMBER(game_start_write);
+	DECLARE_WRITE8_MEMBER(hammer_write);
 	
 	// Additional members (counters etc.)
 	GameTracker tracker;

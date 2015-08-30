@@ -506,6 +506,9 @@ MACHINE_RESET_MEMBER(dkong_state,dkong)
 	tracker.setStat("score", 0);
 	tracker.setStat("deaths", 0);
 	tracker.setStat("bonus", 0);
+	tracker.setStat("barrels", 0);
+	tracker.setStat("pies", 0);
+	tracker.setStat("fireballs", 0);
 }
 
 MACHINE_RESET_MEMBER(dkong_state,strtheat)
@@ -804,6 +807,11 @@ READ8_MEMBER(dkong_state::game_start_read)
 	return tracker.readMemory(0x622c);
 }
 
+READ8_MEMBER(dkong_state::hammer_read)
+{
+	return tracker.readMemory(0x6352);
+}
+
 // WRITE HANDLERS
 WRITE8_MEMBER(dkong_state::score_write)
 {
@@ -890,6 +898,34 @@ WRITE8_MEMBER(dkong_state::game_start_write)
 	}
 }
 
+WRITE8_MEMBER(dkong_state::hammer_write)
+{
+	tracker.writeMemory(0x6352, data);
+	
+	switch(data)
+	{
+		UINT32 fireballs;
+		UINT32 barrels;
+		UINT32 pies;
+		
+		case 0x64:
+			printf("[GIT REKT] Fireball destroyed!\n");
+			fireballs = tracker.getStat("fireballs");
+			tracker.setStat("fireballs", ++fireballs);
+			break;
+		case 0x65:
+			printf("[GIT REKT] Pie destroyed!\n");
+			pies = tracker.getStat("pies");
+			tracker.setStat("pies", ++pies);
+			break;
+		case 0x67:
+			printf("[GIT REKT] Barrel destroyed!\n");
+			barrels = tracker.getStat("barrels");
+			tracker.setStat("barrels", ++barrels);
+			break;
+	}
+}
+
 // End of project specific handlers
 
 /*************************************
@@ -910,9 +946,10 @@ static ADDRESS_MAP_START( dkong_map, AS_PROGRAM, 8, dkong_state )
 	AM_RANGE(0x622c, 0x622c) AM_READ(game_start_read) AM_WRITE(game_start_write)	
 	AM_RANGE(0x622d, 0x62b0) AM_RAM
 	AM_RANGE(0x62b1, 0x62b1) AM_READ(bonus_read) AM_WRITE(bonus_write)
-	AM_RANGE(0x62b2, 0x6bff) AM_RAM
-
-	AM_RANGE(0x622d, 0x6bff) AM_RAM
+	AM_RANGE(0x62b2, 0x6351) AM_RAM
+	AM_RANGE(0x6352, 0x6352) AM_READ(hammer_read) AM_WRITE(hammer_write)
+	AM_RANGE(0x6353, 0x6bff) AM_RAM
+	
 	AM_RANGE(0x7000, 0x73ff) AM_RAM AM_SHARE("sprite_ram") /* sprite set 1 */
 	AM_RANGE(0x7400, 0x77ff) AM_RAM_WRITE(dkong_videoram_w) AM_SHARE("video_ram")
 	AM_RANGE(0x7800, 0x780f) AM_DEVREADWRITE("dma8257", i8257_device, read, write)   /* P8257 control registers */
