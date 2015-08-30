@@ -792,13 +792,18 @@ READ8_MEMBER(dkong_state::level_state_read)
 // WRITE HANDLERS
 WRITE8_MEMBER(dkong_state::score_write)
 {
+	char score_buffer[12];
 	// Basic plumbing to allow this region of memory to be written to
 	tracker.writeMemory(0x60b2 + offset, data);
-	
+	UINT32 score = (0x000000FF & tracker.readMemory(0x60b4)) << 16 | (0x000000FF & tracker.readMemory(0x60b3)) << 8 | (0x000000FF & tracker.readMemory(0x60b2));
+	sprintf(score_buffer, "%x", score);
+	UINT32 new_score = atoi(score_buffer);
+	tracker.setStat("score", new_score);
 	// Update score to the console for testing
 	if(offset == 2)
 	{
-		printf("[SCORE] %02x%02x%02x\n", tracker.readMemory(0x60b4), tracker.readMemory(0x60b3), tracker.readMemory(0x60b2));
+		//printf("[SCORE] %02x%02x%02x\n", tracker.readMemory(0x60b4), tracker.readMemory(0x60b3), tracker.readMemory(0x60b2));
+		printf("[SCORE] %d\n", new_score);
 	}
 }
 
@@ -828,6 +833,15 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 		case 0x10:
 			printf("[LEVEL STATE] Game over.\n");
 			deaths = 0;
+			break;
+		case 0x16:
+			printf("[LEVEL STATE] Level over.\n");
+			tracker.buildJSON();
+			printf("---------------------------\n");
+			printf("  END OF LEVEL STATISTICS  \n");
+			printf("---------------------------\n");
+			printf("%s", tracker.json.str().c_str());
+			printf("---------------------------\n");
 			break;
 		default:
 			printf("[LEVEL STATE] Unknown state: %02x\n", data);

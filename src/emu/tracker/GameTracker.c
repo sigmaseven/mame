@@ -1,12 +1,12 @@
 #include "emu.h"
 #include "GameTracker.h"
-
-void GameTracker::setStat(std::string name, UINT64 value)
+#include <sstream>
+void GameTracker::setStat(std::string name, UINT32 value)
 {
 	stats[name] = value;
 }
 
-UINT64 *GameTracker::getStat(std::string name)
+UINT32 *GameTracker::getStat(std::string name)
 {
 	if(stats.count(name))
 	{
@@ -44,4 +44,18 @@ UINT8 GameTracker::readMemory(UINT16 address)
 void GameTracker::writeMemory(UINT16 address, UINT8 value)
 {
 	memory[address] = value;
+}
+
+void GameTracker::buildJSON()
+{
+	std::map<std::string, UINT32>::iterator i;
+	// Reset our JSON string.
+	json.str("");
+	
+	json << "{\n";
+		for(i = stats.begin(); i != stats.end(); i++)
+		{
+			json << '"' << i->first << '"' << ':' << i->second << ',' << "\n";
+		}
+	json << "}\n";
 }
