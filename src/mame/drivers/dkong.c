@@ -502,7 +502,10 @@ MACHINE_RESET_MEMBER(dkong_state,dkong)
 	/* nothing */
 	tracker.setMemoryBase(memregion("maincpu")->base());
 	tracker.clearStats();
+	tracker.setStat("running", 0);
+	tracker.setStat("score", 0);
 	tracker.setStat("deaths", 0);
+	tracker.setStat("bonus", 0);
 }
 
 MACHINE_RESET_MEMBER(dkong_state,strtheat)
@@ -796,6 +799,11 @@ READ8_MEMBER(dkong_state::bonus_read)
 	return tracker.readMemory(0x62b1);
 }
 
+READ8_MEMBER(dkong_state::game_start_read)
+{
+	return tracker.readMemory(0x622c);
+}
+
 // WRITE HANDLERS
 WRITE8_MEMBER(dkong_state::score_write)
 {
@@ -840,7 +848,14 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 			break;
 		case 0x10:
 			printf("[LEVEL STATE] Game over.\n");
-			deaths = 0;
+			tracker.setStat("running", 0);
+			tracker.buildJSON();
+			tracker.writeFile("dkong.json");
+			printf("---------------------------\n");
+			printf("  END OF GAME STATISTICS   \n");
+			printf("---------------------------\n");
+			printf("%s", tracker.json.str().c_str());
+			printf("---------------------------\n");
 			break;
 		case 0x16:
 			printf("[LEVEL STATE] Level over.\n");
@@ -864,6 +879,17 @@ WRITE8_MEMBER(dkong_state::bonus_write)
 	printf("[BONUS] %d\n", data * 100);
 }
 
+WRITE8_MEMBER(dkong_state::game_start_write)
+{
+	//UINT8 last = tracker.readMemory(0x622c);
+	tracker.writeMemory(0x622c, data);
+	if(data == 1)
+	{
+		printf("GAME STARTED\n");
+		tracker.setStat("running", 1);
+	}
+}
+
 // End of project specific handlers
 
 /*************************************
@@ -880,9 +906,13 @@ static ADDRESS_MAP_START( dkong_map, AS_PROGRAM, 8, dkong_state )
 	AM_RANGE(0x600A, 0x600A) AM_READ(level_state_read) AM_WRITE(level_state_write)
 	AM_RANGE(0x600B, 0x60b1) AM_RAM
 	AM_RANGE(0x60b2, 0x60b4) AM_READ(score_read) AM_WRITE(score_write)
-	AM_RANGE(0x60b5, 0x62b0) AM_RAM
+	AM_RANGE(0x60b5, 0x622b) AM_RAM
+	AM_RANGE(0x622c, 0x622c) AM_READ(game_start_read) AM_WRITE(game_start_write)	
+	AM_RANGE(0x622d, 0x62b0) AM_RAM
 	AM_RANGE(0x62b1, 0x62b1) AM_READ(bonus_read) AM_WRITE(bonus_write)
-	AM_RANGE(0x60b2, 0x6bff) AM_RAM
+	AM_RANGE(0x62b2, 0x6bff) AM_RAM
+
+	AM_RANGE(0x622d, 0x6bff) AM_RAM
 	AM_RANGE(0x7000, 0x73ff) AM_RAM AM_SHARE("sprite_ram") /* sprite set 1 */
 	AM_RANGE(0x7400, 0x77ff) AM_RAM_WRITE(dkong_videoram_w) AM_SHARE("video_ram")
 	AM_RANGE(0x7800, 0x780f) AM_DEVREADWRITE("dma8257", i8257_device, read, write)   /* P8257 control registers */
