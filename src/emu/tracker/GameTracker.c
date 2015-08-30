@@ -6,16 +6,9 @@ void GameTracker::setStat(std::string name, UINT32 value)
 	stats[name] = value;
 }
 
-UINT32 *GameTracker::getStat(std::string name)
+UINT32 GameTracker::getStat(std::string name)
 {
-	if(stats.count(name))
-	{
-		return &stats[name];
-	}
-	else
-	{
-		return NULL;
-	}
+	return stats[name];
 }
 
 void GameTracker::clearStat(std::string name)
@@ -55,7 +48,7 @@ void GameTracker::buildJSON()
 	json << "{\n";
 		for(i = stats.begin(); i != stats.end(); i++)
 		{
-			json << '"' << i->first << '"' << ':' << i->second << ',' << "\n";
+			json << '"' << i->first << '"' << " : " << i->second << ',' << "\n";
 		}
 	json << "}\n";
 }

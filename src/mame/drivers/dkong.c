@@ -501,6 +501,8 @@ MACHINE_RESET_MEMBER(dkong_state,dkong)
 {
 	/* nothing */
 	tracker.setMemoryBase(memregion("maincpu")->base());
+	tracker.clearStats();
+	tracker.setStat("deaths", 0);
 }
 
 MACHINE_RESET_MEMBER(dkong_state,strtheat)
@@ -789,6 +791,11 @@ READ8_MEMBER(dkong_state::level_state_read)
 	return tracker.readMemory(0x600a);
 }
 
+READ8_MEMBER(dkong_state::bonus_read)
+{
+	return tracker.readMemory(0x62b1);
+}
+
 // WRITE HANDLERS
 WRITE8_MEMBER(dkong_state::score_write)
 {
@@ -810,10 +817,11 @@ WRITE8_MEMBER(dkong_state::score_write)
 WRITE8_MEMBER(dkong_state::level_state_write)
 {
 	tracker.writeMemory(0x600a, data);
-	tracker.setStat("level_state", data);
+	//tracker.setStat("level_state", data);
 	// Let's print some debug information to the console for fun.
 	switch(data)
 	{
+		UINT32 deaths;
 		case 0x01:
 			printf("[LEVEL STATE] Entering attract mode.\n");
 			break;
@@ -825,10 +833,10 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 			break;
 		case 0x0d: 
 			printf("[LEVEL STATE] Dead.\n");
+			deaths = tracker.getStat("deaths");
 			deaths++;
-			total_deaths++;
+			tracker.setStat("deaths", deaths);
 			printf("[DEATH COUNT] Deaths: %d\n", deaths);
-			printf("[DEATH COUNT] Total deaths: %d\n", total_deaths);
 			break;
 		case 0x10:
 			printf("[LEVEL STATE] Game over.\n");
@@ -848,6 +856,13 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 	}
 }
 
+WRITE8_MEMBER(dkong_state::bonus_write)
+{
+	tracker.writeMemory(0x62b1, data);
+	tracker.setStat("bonus", data * 100);
+	printf("[BONUS] %d\n", data * 100);
+}
+
 // End of project specific handlers
 
 /*************************************
@@ -864,7 +879,9 @@ static ADDRESS_MAP_START( dkong_map, AS_PROGRAM, 8, dkong_state )
 	AM_RANGE(0x600A, 0x600A) AM_READ(level_state_read) AM_WRITE(level_state_write)
 	AM_RANGE(0x600B, 0x60b1) AM_RAM
 	AM_RANGE(0x60b2, 0x60b4) AM_READ(score_read) AM_WRITE(score_write)
-	AM_RANGE(0x60b5, 0x6bff) AM_RAM
+	AM_RANGE(0x60b5, 0x62b0) AM_RAM
+	AM_RANGE(0x62b1, 0x62b1) AM_READ(bonus_read) AM_WRITE(bonus_write)
+	AM_RANGE(0x60b2, 0x6bff) AM_RAM
 	AM_RANGE(0x7000, 0x73ff) AM_RAM AM_SHARE("sprite_ram") /* sprite set 1 */
 	AM_RANGE(0x7400, 0x77ff) AM_RAM_WRITE(dkong_videoram_w) AM_SHARE("video_ram")
 	AM_RANGE(0x7800, 0x780f) AM_DEVREADWRITE("dma8257", i8257_device, read, write)   /* P8257 control registers */

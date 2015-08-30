@@ -11,7 +11,7 @@ class GameTracker
 		std::stringstream json;
 		
 		void setStat(std::string name, UINT32 value);
-		UINT32 *getStat(std::string name);
+		UINT32 getStat(std::string name);
 		void clearStat(std::string name);
 		void clearStats();
 		void setMemoryBase(UINT8 *base);
