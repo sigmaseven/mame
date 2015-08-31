@@ -886,7 +886,7 @@ WRITE8_MEMBER(dkong_state::bonus_write)
 {
 	UINT32 bonus;
 	
-	tracker.writeMemory(0x62b1, bonus);
+	tracker.writeMemory(0x62b1, data);
 	
 	if(data == 0xff)
 	{
