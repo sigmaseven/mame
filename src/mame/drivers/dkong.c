@@ -509,6 +509,8 @@ MACHINE_RESET_MEMBER(dkong_state,dkong)
 	tracker.setStat("barrels", 0);
 	tracker.setStat("pies", 0);
 	tracker.setStat("fireballs", 0);
+	tracker.setStat("blue_barrels", 0);
+	tracker.setStat("firefoxes", 0);
 }
 
 MACHINE_RESET_MEMBER(dkong_state,strtheat)
@@ -905,6 +907,7 @@ WRITE8_MEMBER(dkong_state::hammer_write)
 	UINT8  index = prog_space.read_byte(0x6354);
 	UINT16 address = 0x6700 + (index * 0x20) + 0x15;
 	UINT8  blue = prog_space.read_byte(address);
+	UINT8  stage = prog_space.read_byte(0x6227);
 	UINT32 fireballs;
 	UINT32 barrels;
 	UINT32 pies;
@@ -912,9 +915,18 @@ WRITE8_MEMBER(dkong_state::hammer_write)
 	switch(data)
 	{
 		case 0x64:
-			printf("[GIT REKT] Fireball destroyed!\n");
-			fireballs = tracker.getStat("fireballs");
-			tracker.setStat("fireballs", ++fireballs);
+			if(stage == 4)
+			{
+				printf("[GIT REKT] Firefox destroyed!\n");
+				fireballs = tracker.getStat("firefoxes");
+				tracker.setStat("firefoxes", ++fireballs);
+			}
+			else
+			{
+				printf("[GIT REKT] Fireball destroyed!\n");
+				fireballs = tracker.getStat("fireballs");
+				tracker.setStat("fireballs", ++fireballs);	
+			}
 			break;
 		case 0x65:
 			printf("[GIT REKT] Pie destroyed!\n");
