@@ -900,14 +900,17 @@ WRITE8_MEMBER(dkong_state::game_start_write)
 
 WRITE8_MEMBER(dkong_state::hammer_write)
 {
+	address_space &prog_space = m_maincpu->space(AS_PROGRAM);
 	tracker.writeMemory(0x6352, data);
-	
+	UINT8  index = prog_space.read_byte(0x6354);
+	UINT16 address = 0x6700 + (index * 0x20) + 0x15;
+	UINT8  blue = prog_space.read_byte(address);
+	UINT32 fireballs;
+	UINT32 barrels;
+	UINT32 pies;
+
 	switch(data)
 	{
-		UINT32 fireballs;
-		UINT32 barrels;
-		UINT32 pies;
-		
 		case 0x64:
 			printf("[GIT REKT] Fireball destroyed!\n");
 			fireballs = tracker.getStat("fireballs");
@@ -919,9 +922,21 @@ WRITE8_MEMBER(dkong_state::hammer_write)
 			tracker.setStat("pies", ++pies);
 			break;
 		case 0x67:
-			printf("[GIT REKT] Barrel destroyed!\n");
-			barrels = tracker.getStat("barrels");
-			tracker.setStat("barrels", ++barrels);
+			printf("[BARREL CHECK] address: %04x index: %02x blue: %02x\n", address, index, blue);
+			if(blue == 1)
+			{
+				printf("[GIT REKT] Blue barrel destroyed!\n");
+				barrels = tracker.getStat("blue_barrels");
+				tracker.setStat("blue_barrels", ++barrels);
+			}
+			else
+			{
+				printf("[GIT REKT] Barrel destroyed!\n");
+				barrels = tracker.getStat("barrels");
+				tracker.setStat("barrels", ++barrels);
+			}
+			break;
+		default:
 			break;
 	}
 }
@@ -949,6 +964,9 @@ static ADDRESS_MAP_START( dkong_map, AS_PROGRAM, 8, dkong_state )
 	AM_RANGE(0x62b2, 0x6351) AM_RAM
 	AM_RANGE(0x6352, 0x6352) AM_READ(hammer_read) AM_WRITE(hammer_write)
 	AM_RANGE(0x6353, 0x6bff) AM_RAM
+	//AM_RANGE(0x6353, 0x6353) AM_RAM
+	//AM_RANGE(0x6354, 0x6354) AM_READ(barrel_read) AM_WRITE(barrel_write)
+	//AM_RANGE(0x6355, 0x6bff) AM_RAM
 	
 	AM_RANGE(0x7000, 0x73ff) AM_RAM AM_SHARE("sprite_ram") /* sprite set 1 */
 	AM_RANGE(0x7400, 0x77ff) AM_RAM_WRITE(dkong_videoram_w) AM_SHARE("video_ram")
