@@ -884,9 +884,22 @@ WRITE8_MEMBER(dkong_state::level_state_write)
 
 WRITE8_MEMBER(dkong_state::bonus_write)
 {
-	tracker.writeMemory(0x62b1, data);
-	tracker.setStat("bonus", data * 100);
-	printf("[BONUS] %d\n", data * 100);
+	UINT32 bonus;
+	
+	tracker.writeMemory(0x62b1, bonus);
+	
+	if(data == 0xff)
+	{
+		bonus = 0;
+	}
+	else
+	{
+		bonus = data;
+	}
+	
+	tracker.writeMemory(0x62b1, bonus);
+	tracker.setStat("bonus", bonus * 100);
+	printf("[BONUS] %d\n", bonus * 100);
 }
 
 WRITE8_MEMBER(dkong_state::game_start_write)
@@ -908,48 +921,51 @@ WRITE8_MEMBER(dkong_state::hammer_write)
 	UINT16 address = 0x6700 + (index * 0x20) + 0x15;
 	UINT8  blue = prog_space.read_byte(address);
 	UINT8  stage = prog_space.read_byte(0x6227);
+	UINT32 running = tracker.getStat("running");
 	UINT32 fireballs;
 	UINT32 barrels;
 	UINT32 pies;
-
-	switch(data)
+	if(running == 1)
 	{
-		case 0x64:
-			if(stage == 4)
-			{
-				printf("[GIT REKT] Firefox destroyed!\n");
-				fireballs = tracker.getStat("firefoxes");
-				tracker.setStat("firefoxes", ++fireballs);
-			}
-			else
-			{
-				printf("[GIT REKT] Fireball destroyed!\n");
-				fireballs = tracker.getStat("fireballs");
-				tracker.setStat("fireballs", ++fireballs);	
-			}
-			break;
-		case 0x65:
-			printf("[GIT REKT] Pie destroyed!\n");
-			pies = tracker.getStat("pies");
-			tracker.setStat("pies", ++pies);
-			break;
-		case 0x67:
-			printf("[BARREL CHECK] address: %04x index: %02x blue: %02x\n", address, index, blue);
-			if(blue == 1)
-			{
-				printf("[GIT REKT] Blue barrel destroyed!\n");
-				barrels = tracker.getStat("blue_barrels");
-				tracker.setStat("blue_barrels", ++barrels);
-			}
-			else
-			{
-				printf("[GIT REKT] Barrel destroyed!\n");
-				barrels = tracker.getStat("barrels");
-				tracker.setStat("barrels", ++barrels);
-			}
-			break;
-		default:
-			break;
+		switch(data)
+		{
+			case 0x64:
+				if(stage == 4)
+				{
+					printf("[GIT REKT] Firefox destroyed!\n");
+					fireballs = tracker.getStat("firefoxes");
+					tracker.setStat("firefoxes", ++fireballs);
+				}
+				else
+				{
+					printf("[GIT REKT] Fireball destroyed!\n");
+					fireballs = tracker.getStat("fireballs");
+					tracker.setStat("fireballs", ++fireballs);	
+				}
+				break;
+			case 0x65:
+				printf("[GIT REKT] Pie destroyed!\n");
+				pies = tracker.getStat("pies");
+				tracker.setStat("pies", ++pies);
+				break;
+			case 0x67:
+				printf("[BARREL CHECK] address: %04x index: %02x blue: %02x\n", address, index, blue);
+				if(blue == 1)
+				{
+					printf("[GIT REKT] Blue barrel destroyed!\n");
+					barrels = tracker.getStat("blue_barrels");
+					tracker.setStat("blue_barrels", ++barrels);
+				}
+				else
+				{
+					printf("[GIT REKT] Barrel destroyed!\n");
+					barrels = tracker.getStat("barrels");
+					tracker.setStat("barrels", ++barrels);
+				}
+				break;
+			default:
+				break;
+		}
 	}
 }
 
